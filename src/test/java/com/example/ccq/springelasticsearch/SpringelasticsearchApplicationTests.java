@@ -3,11 +3,14 @@ package com.example.ccq.springelasticsearch;
 import com.example.ccq.springelasticsearch.dao.ItemRepository;
 import com.example.ccq.springelasticsearch.pojo.Item;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
@@ -137,6 +140,7 @@ public class SpringelasticsearchApplicationTests {
         //构建查询条件
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         //添加分词查询
+        // matchQuery:底层就是使用的termQuery
         queryBuilder.withQuery(QueryBuilders.matchQuery("title","小米手机"));
         //搜索，获取结果
         Page<Item> items = itemRepository.search(queryBuilder.build());
@@ -148,6 +152,109 @@ public class SpringelasticsearchApplicationTests {
             System.out.println(item);
         }
     }
+
+
+    /**
+     * @Description:
+     * termQuery:功能更强大，除了匹配字符串以外，还可以匹配
+     * int/long/double/float/....
+     */
+    @Test
+    public void testTermQuery(){
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        queryBuilder.withQuery(QueryBuilders.termQuery("price",2799.0));
+        //查找
+        Page<Item> items = itemRepository.search(queryBuilder.build());
+        for (Item item:items) {
+            System.out.println(item);
+        }
+        }
+
+    /**
+     *  @Description:布尔查询
+     */
+    @Test
+    public void testboolean(){
+        NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
+        builder.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("title","华为"))
+                                                   .must(QueryBuilders.matchQuery("brand","华为"))
+
+
+        );
+        //查找
+        Page<Item> search = itemRepository.search(builder.build());
+        for (Item item:
+             search) {
+            System.out.println(item);
+        }
+
+    }
+
+    /**
+     * 模糊查询
+     */
+    @Test
+    public void testfuzzy(){
+        NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
+        builder.withQuery(QueryBuilders.fuzzyQuery("title","华为"));
+        Page<Item> search = itemRepository.search(builder.build());
+        for (Item item :search
+             ) {
+            System.out.println(item);
+        }
+    }
+
+    /**
+     * 分页查询
+     * Elasticsearch中的分页是从第0页开始。
+     */
+    @Test
+    public void pagetest(){
+        //构建查询条件
+        NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
+        //添加基本分词查询
+        builder.withQuery(QueryBuilders.termQuery("category","手机"));
+        //分页
+        int page=0;//第一页
+        int size=2;//每页两条
+        builder.withPageable(PageRequest.of(page,size));
+
+        //获取结果
+        Page<Item> search = itemRepository.search(builder.build());
+        //总条数
+        long total = search.getTotalElements();
+        System.out.println("总条数："+total);
+        System.out.println("总页数："+search.getTotalPages());
+        //当前页
+        System.out.println("当前页："+search.getNumber());
+        System.out.println("每页大小："+search.getSize());
+
+        for (Item item:search) {
+            System.out.println(item);
+        }
+
+    }
+
+    /**
+     * 排序查询
+     */
+    @Test
+    public void searchAndSort(){
+        // 构建查询条件
+        NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
+        // 添加基本分词查询
+        builder.withQuery(QueryBuilders.termQuery("category", "手机"));
+        //排序
+        builder.withSort(SortBuilders.fieldSort("price").order(SortOrder.ASC));
+
+        //查询结果
+        Page<Item> search = itemRepository.search(builder.build());
+        for (Item item:search
+             ) {
+            System.out.println(item);
+        }
+    }
+
 
 
 }
