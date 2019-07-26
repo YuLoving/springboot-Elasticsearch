@@ -3,12 +3,39 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.ccq.springelasticsearch.dao.Usermapper">
+    <resultMap id="usermap" type="com.example.ccq.springelasticsearch.pojo.User">
+        <id property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <collection property="roles" ofType="com.example.ccq.springelasticsearch.pojo.role">
+            <id property="roleId" column="role_id"/>
+            <result property="name" column="name"/>
+            <result property="status" column="status"/>
+            <collection property="permissions" ofType="com.example.ccq.springelasticsearch.pojo.permission">
+                <id property="permissionId" column="permission_id"/>
+                <result property="name" column="name"/>
+                <result property="url" column="url"/>
+            </collection>
+        </collection>
+
+    </resultMap>
+
+
 
     <select id="findbyusername" parameterType="string" resultType="com.example.ccq.springelasticsearch.pojo.User">
           select * from user where
-          <if test="name!= ''">
-              username=#{name}
-          </if>
+        <if test=" name!=null and name!=''">
+            username = #{name}
+        </if>
+
+    </select>
+
+    <select id="findbyId" parameterType="string" resultType="com.example.ccq.springelasticsearch.pojo.User">
+        select * from user where
+        <if test=" userid!=null and userid!=''">
+            userId = #{userid}
+        </if>
+
     </select>
 </mapper>
 

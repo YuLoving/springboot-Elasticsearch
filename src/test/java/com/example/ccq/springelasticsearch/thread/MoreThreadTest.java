@@ -1,4 +1,4 @@
-package com.example.ccq.springelasticsearch;
+package com.example.ccq.springelasticsearch.thread;
 
 /**
  * 一个多线程死锁的例子

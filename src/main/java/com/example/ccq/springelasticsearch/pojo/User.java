@@ -44,8 +44,8 @@ public class User implements Serializable {
     /**
      * 用户和角色是多对多
      */
-
     private Set<role> roles=new HashSet<>();
+
 
 
 
