@@ -3,39 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.ccq.springelasticsearch.dao.Usermapper">
-    <resultMap id="usermap" type="com.example.ccq.springelasticsearch.pojo.User">
-        <id property="userId" column="user_id"/>
-        <result property="username" column="username"/>
-        <result property="password" column="password"/>
+
+    <resultMap id="userMap" type="com.example.ccq.springelasticsearch.pojo.User">
+        <id  property="uid" column="uid"></id>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
         <collection property="roles" ofType="com.example.ccq.springelasticsearch.pojo.role">
-            <id property="roleId" column="role_id"/>
-            <result property="name" column="name"/>
-            <result property="status" column="status"/>
-            <collection property="permissions" ofType="com.example.ccq.springelasticsearch.pojo.permission">
-                <id property="permissionId" column="permission_id"/>
-                <result property="name" column="name"/>
-                <result property="url" column="url"/>
+            <id property="rid" column="rid"></id>
+            <result property="rname" column="rname"></result>
+            <collection property="modules" ofType="com.example.ccq.springelasticsearch.pojo.Module">
+                <id property="mid" column="mid"></id>
+                <result property="mname" column="mname"></result>
             </collection>
         </collection>
-
     </resultMap>
 
 
-
-    <select id="findbyusername" parameterType="string" resultType="com.example.ccq.springelasticsearch.pojo.User">
-          select * from user where
-        <if test=" name!=null and name!=''">
-            username = #{name}
-        </if>
-
-    </select>
-
-    <select id="findbyId" parameterType="string" resultType="com.example.ccq.springelasticsearch.pojo.User">
-        select * from user where
-        <if test=" userid!=null and userid!=''">
-            userId = #{userid}
-        </if>
+    <select id="findByUserName" parameterType="string" resultMap="userMap">
+         SELECT u.*,r.*,m.* FROM user u
+         inner join user_role ur on ur.uid=u.uid
+         inner join role r on r.rid=ur.rid
+         inner join module_role mr on mr.rid=r.rid
+         inner join module m on mr.mid=m.mid
+        WHERE username=#{username};
 
     </select>
+
+
+
 </mapper>
 

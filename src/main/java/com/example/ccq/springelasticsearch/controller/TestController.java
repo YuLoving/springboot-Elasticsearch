@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,4 +48,19 @@ public class TestController {
         return map;
 
     }
+
+
+
+    @GetMapping("/123")
+    @ResponseBody
+    public String get123(String aa) throws UnsupportedEncodingException {
+        String s = URLDecoder.decode(aa, "utf-8");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
+
 }

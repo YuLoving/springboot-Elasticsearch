@@ -18,7 +18,6 @@ public class Test01 {
        });
 
 
-
     }
 
     public static String get(){
@@ -34,12 +33,12 @@ public class Test01 {
         System.out.println("异步第一个任务结束"+a);
         return "第一个异步结果";
     }
-
+    private static int time=1500;
     // 超时1.5s
     public static String timeout(){
         long start=System.currentTimeMillis();
         try {
-            Thread.sleep(1500);
+            Thread.sleep(time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,15 +1,11 @@
-package com.example.ccq.springelasticsearch.dao;
+package com.example.ccq.springelasticsearch.service;
 
 import com.example.ccq.springelasticsearch.pojo.User;
 import com.example.ccq.springelasticsearch.pojo.role;
-import org.apache.ibatis.annotations.Mapper;
 
-
-@Mapper
-public interface Usermapper {
+public interface Userservice {
 
     //通过名字来查询用户、角色、权限
     User findByUserName(String username);
-
 
 }
