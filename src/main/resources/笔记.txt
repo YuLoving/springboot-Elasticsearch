@@ -126,4 +126,27 @@ Value Count Aggregation：求总数
 
 
 
+====================================================阿里的easyexcel====================================
+Java解析、生成Excel比较有名的框架有Apache poi、jxl。但他们都存在一个严重的问题就是非常的耗内存，
+poi有一套SAX模式的API可以一定程度的解决一些内存溢出的问题，但POI还是有一些缺陷，比如07版Excel解压缩以及解压后存储都是在内存中完成的，
+内存消耗依然很大。easyexcel重写了poi对07版Excel的解析，能够原本一个3M的excel用POI sax依然需要100M左右内存降低到KB级别，
+并且再大的excel不会出现内存溢出，03版依赖POI的sax模式。在上层做了模型转换的封装，让使用者更加简单方便
 
+easyexcel核心功能
+读任意大小的03、07版Excel不会OOM
+读Excel自动通过注解，把结果映射为java模型
+读Excel支持多sheet
+读Excel时候是否对Excel内容做trim()增加容错
+写小量数据的03版Excel（不要超过2000行）
+写任意大07版Excel不会OOM
+写Excel通过注解将表头自动写入Excel
+写Excel可以自定义Excel样式 如：字体，加粗，表头颜色，数据内容颜色
+写Excel到多个不同sheet
+写Excel时一个sheet可以写多个Table
+写Excel时候自定义是否需要写表头
+
+
+2. 读取Excel
+使用easyexcel解析03、07版本的Excel只是ExcelTypeEnum不同，其他使用完全相同，使用者无需知道底层解析的差异。
+
+无java模型直接把excel解析的每行结果以List返回 在ExcelListener获取解析结果
