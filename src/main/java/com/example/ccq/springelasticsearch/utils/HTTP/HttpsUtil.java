@@ -1,8 +1,6 @@
 package com.example.ccq.springelasticsearch.utils.HTTP;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
+import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -12,7 +10,9 @@ import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
@@ -140,6 +140,37 @@ public class HttpsUtil {
         return entity;
     }
 
+    public static String doPost(String url, Header[] headers, Map<String, Object> paramMaps) {
+        String result = null;
+        HttpPost httpPost = new HttpPost(url);
+        HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+        CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
+        try {
+            httpPost.setHeaders(headers);
+            List<NameValuePair> pairList = new ArrayList<>();
+            for (Map.Entry<String, Object> entry : paramMaps.entrySet()) {
+                String key = entry.getKey();
+                String value = (String) entry.getValue();
+                pairList.add(new BasicNameValuePair(key, value));
+            }
+            UrlEncodedFormEntity urlEntity = new UrlEncodedFormEntity(pairList, "UTF-8");
+            httpPost.setEntity(urlEntity);
+            HttpResponse resp = closeableHttpClient.execute(httpPost);
+            if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                result = EntityUtils.toString(resp.getEntity(), "UTF-8").trim();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("HTTP post failed.", e);
+        } finally {
+            httpPost.abort();
+            try {
+                closeableHttpClient.close();
+            } catch (Exception e2) {
+                throw new RuntimeException("Close CloseableHttpClient failed.", e2);
+            }
+        }
 
+        return result;
+    }
 
 }

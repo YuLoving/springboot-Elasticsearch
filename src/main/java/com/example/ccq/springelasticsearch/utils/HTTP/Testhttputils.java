@@ -26,12 +26,12 @@ public class Testhttputils {
 
 
         String url="http://localhost:8186/postaa";
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("a","1");
         map.put("b","2");
         System.err.println(map.toString());
 
-        String s = HttpClientUtil.doPost(url,map);
+        String s = HttpsUtil.doPost(url,null,map);
         System.out.println(s);
     }
 }
