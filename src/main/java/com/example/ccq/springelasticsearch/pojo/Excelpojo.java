@@ -14,10 +14,12 @@ public class Excelpojo  extends BaseRowModel {
     @ExcelProperty(index = 2 , value = "性别")
     private String sex;
 
-    @ExcelProperty(index = 3,value = "出生年月",format = "yyyy/MM/dd")
+    @ExcelProperty(index = 3,value = "出生年月",format ="yyyy/MM/dd")
     private String birth;
 
-    @ExcelProperty(index = 3 , value = "联系电话")
+    @ExcelProperty(index = 4 , value = "联系电话")
     private String tel;
+
+
 
 }

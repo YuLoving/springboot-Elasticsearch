@@ -32,8 +32,9 @@ public class ExcelListener  extends AnalysisEventListener {
         System.out.println(o);
         //数据存储到list，供批量处理，或后续自己业务逻辑处理。
         datas.add(o);
+
         //根据自己业务做处理
-        doSomething(0);
+       doSomething(o);
 
     }
 

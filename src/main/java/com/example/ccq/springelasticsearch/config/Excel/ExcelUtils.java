@@ -7,6 +7,7 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.metadata.BaseRowModel;
 import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
+import com.example.ccq.springelasticsearch.pojo.Excelpojo;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
@@ -79,6 +80,64 @@ public class ExcelUtils {
                 }
         }
         return true;
+    }
+
+
+    public static void main(String[] args) {
+        //1.读Excel
+        FileInputStream fis=null;
+        try {
+            fis=new FileInputStream("D:\\导入数据.xlsx");
+            boolean flag = ExcelUtils.readexcel(fis, Excelpojo.class);
+            System.out.println("是否导入成功："+flag);
+        }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                if (fis != null){
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+        }
+
+      //2.导出
+      /*  FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream("D:\\export.xlsx");
+            //FileOutputStream fos, Class clazz, List<? extends BaseRowModel> data
+            List<Excelpojo> list = new ArrayList<>();
+            for (int i = 0; i < 5; i++){
+                Excelpojo excelEntity = new Excelpojo();
+                excelEntity.setName("我是名字"+i);
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+                String s = format.format(new Date());
+                excelEntity.setBirth(s);
+                list.add(excelEntity);
+            }
+            Boolean flag = ExcelUtils.writeExcel(fos,Excelpojo.class,list);
+            System.out.println("导出是否成功："+flag);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            if (fos != null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+
+*/
+
+
+
     }
 
 }
