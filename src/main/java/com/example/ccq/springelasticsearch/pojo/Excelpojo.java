@@ -20,6 +20,4 @@ public class Excelpojo  extends BaseRowModel {
     @ExcelProperty(index = 4 , value = "联系电话")
     private String tel;
 
-
-
 }

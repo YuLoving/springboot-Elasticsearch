@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ccq.springelasticsearch.dao.EasyExcelmapper">
+
+
+
+    <insert id="moreadd"   parameterType="com.example.ccq.springelasticsearch.pojo.Excelpojo" >
+        insert  into test(staff_code,name,sex,birth,tel)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.staff_code},#{item.name},#{item.sex},#{item.birth},#{item.tel})
+        </foreach>
+    </insert>
+
+
+    <insert id="add"  parameterType="com.example.ccq.springelasticsearch.pojo.Excelpojo">
+        insert  into test(staff_code,name,sex,birth,tel)
+        values
+            (#{staff_code},#{name},#{sex},#{birth},#{tel})
+
+    </insert>
+
+</mapper>
+
