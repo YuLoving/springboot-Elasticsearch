@@ -1,5 +1,7 @@
 package com.example.ccq.springelasticsearch.Testjava8;
 
+import java.util.*;
+
 /**
  *
  *
@@ -39,6 +41,40 @@ package com.example.ccq.springelasticsearch.Testjava8;
 public class Testlambda {
 
     public static void main(String[] args) {
+   /*    // 1）没有参数的表达式：
+        ()-> System.out.println("没有参数的Lambda表达式");
+        //（2）只有一个参数的表达式：
+        (X)-> System.out.println("只有一个参数的Lambda表达式");
 
+       //说明：一个参数的可以不用使用()，如果参数声明了参数类型则必须要加()；Lambda主体是语句块的话需要使用{}。
+
+        //3）有两个或者多个参数的表达式：
+        (x,y) -> System.out.println("these are several parameters Lambda expression");*/
+
+        /*List<String> list = Arrays.asList("我的", "asda", "dasda", "wode", "尴尬");
+        list.forEach((n)-> System.out.println(n));*/
+
+        //1.数组的遍历
+        Integer [] items={1,2,3};
+        System.err.println("Lambda 表达式遍历 Array 数组");
+        Arrays.asList(items).forEach(item-> System.out.println(item));
+
+        //2.list的遍历
+        System.err.println("Lambda 表达式遍历list集合");
+        List<Object> list = new ArrayList<>();
+        list.add("基久1");
+        list.add("基久2");
+        list.add("基久3");
+        list.stream().forEach(a-> System.out.println(a));
+
+        //3.map的遍历
+        System.err.println("Lambda 表达式遍历map集合");
+        Map<String, Object> map = new HashMap<>();
+        map.put("p1","假的");
+        map.put("p2",2);
+        map.put("p3","dsdsds");
+        map.forEach((k,v)-> {System.out.println("键："+k+",值："+v);});
     }
+
+
 }
