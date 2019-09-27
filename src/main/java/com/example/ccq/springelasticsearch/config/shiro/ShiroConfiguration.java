@@ -1,7 +1,6 @@
 package com.example.ccq.springelasticsearch.config.shiro;
 
 
-
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -51,6 +50,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/loginUser", "anon");
         filterChainDefinitionMap.put("/excel/**", "anon");
+        filterChainDefinitionMap.put("/flowable/**", "anon");
         filterChainDefinitionMap.put("/admin", "roles[admin]"); //admin的url，要用角色是admin的才可以登录,对应的拦截器是RolesAuthorizationFilter
         filterChainDefinitionMap.put("/update", "perms[update]"); //拥有update权限的用户才有资格去访问
         //filterChainDefinitionMap.put("/druid/**", "anon"); //所有的druid请求，不需要拦截，anon对应的拦截器不会进行拦截

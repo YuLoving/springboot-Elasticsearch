@@ -2,10 +2,13 @@ package com.example.ccq.springelasticsearch.config.shiro;
 
 import com.example.ccq.springelasticsearch.pojo.Module;
 import com.example.ccq.springelasticsearch.pojo.User;
-
 import com.example.ccq.springelasticsearch.pojo.role;
 import com.example.ccq.springelasticsearch.service.Userservice;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
